@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>PAWsitive</title>
+<meta charset="UTF-8">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+    background-image: url('C:/Users/linds/Downloads/web/bg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding-top: 120px;
+    color: white;
+}
+
+/* HEADER */
+header {
+    background-color: #96876f;
+    padding: 15px 0px;
+    display: flex;
+    align-items: center;
+    gap: 100px;
+    position: fixed;
+    top: 20px;
+    left: 0;
+    width: 100%;
+    border-radius: 60px;
+    z-index: 2000;
+    justify-content: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.9);
+}
+
+header:hover {
+    transform: translateY(-10px); /* header moves up */
+    box-shadow: 0 15px 25px rgba(0,0,0,0.3);
+}
+
+nav {
+    flex: 1;
+    display: flex;
+    justify-content: center; /* centers the buttons */
+    gap: 15px;
+}
+
+button {
+    background-color: transparent;
+    border: none;
+    color: white;
+    padding: 12px 25px;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #ffcfab;
+    color: black;
+    transform: scale(1.1);
+}
+
+/* BUTTONS */
+.b2 { margin-right: 20px; background-color: #472b06; border-radius: 70px; }
+.b3 { background-color: transparent; border: 2px solid black; border-radius: 70px; }
+.b4 { margin-top: 10000px; background-color: #472b06; border-radius: 70px; }
+.b5 { margin-top: 50px; background-color: #472b06; border-radius: 70px; }
+.text { display: flex; align-items: center; gap: 20px; }
+
+/* SLIDER */
+.slider-container {
+    position: relative;
+    max-width: 1700px; /* width of slider */
+    margin: auto;
+    height: 400px; /* match the image height */
+}
+
+.landscape-slider {
+    width: 100%;
+    height: auto;
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    scroll-snap-type: x mandatory; 
+    scroll-behavior: smooth;
+    padding-bottom: -5px;
+    scrollbar-width: none;
+}
+
+.landscape-slider::-webkit-scrollbar { display: none; }
+
+.landscape-slider img {
+    width: 100%;
+    height: 530px;
+    object-fit: cover;
+    border-radius: 15px;
+    flex-shrink: 0;
+    scroll-snap-align: center;
+}
+
+.dots-container {
+    position: absolute;
+    bottom: 420px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.dots-new {
+    position: absolute;
+    bottom: 140px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    background-color: #bbb;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.dot.active { background-color: #ffcfab; }
+
+/* GENERAL BOX STYLE */
+.box {
+    border: 2px solid #ccc;
+    border-radius: 15px;
+    padding: 25px;
+    background-color: #966d51;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+/* LARGE BOX (PAWsitive section) */
+.box.large {
+    width: 1000px;
+    margin: 50px auto;
+}
+
+/* SMALL BOXES (MISSION & VISION) */
+.box.small {
+    width: 450px;
+    margin: 20px 0;
+}
+
+
+.fade-img {
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.fade-img.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* Image only affects boxes that have an img */
+.box img {
+    width: 350px;
+    height: auto;
+    border-radius: 10px;
+}
+
+.box .text {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.box .text h1 {
+    margin: 0;
+}
+
+.box .text p {
+    margin: 0;
+    margin-top: 10px;
+}
+
+.box-row {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.new.box {
+    margin-top: 50px;
+    border: 2px solid #ccc;
+    border-radius: 15px;
+    padding: 25px;
+    background-color: #966d51;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.box, .new.box {
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.box:hover, .new.box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 25px rgba(0,0,0,0.4), 0 0 20px rgba(255,207,171,0.5);
+}
+
+/* CONTENT */
+.content {
+    display: none;
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+    animation: fadeIn 0.7s ease;
+}
+
+.hm { max-width: 1300px; text-align: left; }
+.active { display: block !important; }
+
+@keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+
+.services { max-width: 1300px; }
+.adopt { max-width: 2000px; }
+
+/* IMAGE SECTION */
+.about-images { display: flex; flex-direction: column; gap: 20px; }
+.about-images img { width: 100%; border-radius: 10px; }
+
+/* TEAM */
+.team-section {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+.member { text-align: center; }
+.member img {
+    width: 170px;
+    height: 170px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 2px solid #8a5b20;
+}
+
+/* QR */
+.qr { display: block; margin:auto; width: 50%; }
+
+
+
+#contact {
+	text-align: center;
+}
+
+footer {
+    background-color: #96876f;
+    color: #fff;
+    text-align: center;
+    padding: 20px 20px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    box-shadow: 0 -3px 10px rgba(0,0,0,0.2);
+}
+
+footer a {
+    color: #ffcfab;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+footer a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+footer p {
+    margin: 5px 0;
+}
+
+/* CLICKABLE BOX */
+.click-box {
+    background-color: #966d51;
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    width: 350px;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    justify-content: center; /* horizontal centering */
+    align-items: center;
+}
+
+.click-box:hover {
+    transform: translateY(-5px);
+    background-color: #b48867;
+}
+
+/* HIDDEN TEXT BOX */
+.hidden-text {
+    display: none;
+    margin-top: 15px;
+    padding: 20px;
+    background: #ffcfab;
+    color: black;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    animation: fadeIn 0.4s ease;
+    text-align: center;
+}
+
+/* Smooth appearing animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.center-text {
+    text-align: center;
+}
+
+/* Gallery Images */
+.gallery {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.clickable-img {
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+    cursor: pointer;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    filter: grayscale(20%);
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.clickable-img:hover {
+    transform: scale(1.05);
+    filter: grayscale(0%);
+}
+
+/* Modal */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 1000;
+  margin-top: 80px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* Modal content (the image) */
+.modal-content {
+  margin: 50px auto; /* top & bottom 50px, center horizontally */
+  display: block;
+  max-width: 90%;
+  max-height: 80%;
+  border-radius: 15px;
+}
+
+/* Close button */
+.close {
+  position: absolute;
+  top: 20px; /* distance from top */
+  right: 30px;
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.hover-img {
+  transition: transform 0.3s ease; /* smooth transition */
+}
+
+.hover-img:hover {
+  transform: scale(1.1); /* zoom in 10% */
+}
+
+
+/* SIDEBAR */
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #7b6a52;
+    overflow-x: hidden;
+    transition: 0.4s;
+    padding-top: 80px;
+    z-index: 3000;
+    box-shadow: 3px 0 10px rgba(0,0,0,0.4);
+}
+
+.sidebar-logo {
+    width: 120px;
+    display: block;
+    margin: 0 auto 30px auto;
+    border-radius: 15px;
+}
+
+.sidebar-link {
+    display: block;
+    width: 90%;
+    margin: 10px auto;
+    padding: 15px;
+    background: #ffcfab;
+    color: black;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.sidebar-link:hover {
+    background: #ffe0c9;
+    transform: translateX(5px);
+}
+
+/* HAMBURGER ICON */
+.hamburger {
+    position: absolute;
+    left: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 35px;
+    color: white;
+    cursor: pointer;
+    z-index: 3001;
+    padding: 8px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.hamburger:hover {
+    background-color: #ffcfab;
+    color: black;
+}
+
+</style>
+
+</head>
+<body>
+
+
+<!-- SIDEBAR -->
+<div id="sidebar" class="sidebar">
+    <img src="C:/Users/linds/Downloads/web/logo.png" class="sidebar-logo">
+    
+<button onclick="showContent('main'); toggleSidebar();" class="sidebar-link">MAIN</button>
+<button onclick="showContent('pawtner'); toggleSidebar();" class="sidebar-link">BE A PAWT-NER</button>
+<button onclick="showContent('services'); toggleSidebar();" class="sidebar-link">OUR SERVICES</button>
+</div>
+
+
+
+<!-- NAVIGATION -->
+<header>
+<div class="hamburger" onclick="toggleSidebar()">&#9776;</div>
+    <nav>
+        <button onclick="showContent('home')" >Home</button>
+        <button onclick="showContent('about')">About Us</button>
+        <button onclick="showContent('adopt')">Adopt Me</button>
+        <button onclick="showContent('donations')">Donations</button>
+        <button onclick="showContent('contact')">Contact Us</button>
+    </nav>
+</header>
+
+
+
+
+
+
+
+<!-- MAIN -->
+<section id="main" class="content active">
+    <div style="text-align:right; margin-top: 10px; margin-right:100px; line-height:0.8;"><br><br><br><br>
+        <h1 style="font-size:60px; letter-spacing:4px;">LET'S BE</h1>
+        <h1 style="font-size:90px; margin-top:-30px; margin-bottom: 30px">PAWsitive</h1>
+        <button onclick="showContent('pawtner')" class="b2">BE A PAWT-NER NOW</button>
+        <button onclick="showContent('services')" class="b3">OUR SERVICES</button>
+    </div><br><br><br><br><br><br><br><br>
+</section>
+
+<!-- HOME -->
+<section id="home" class="content hm">
+
+  <!-- FLEX CONTAINER -->
+  <div style="display: flex; align-items: flex-start; gap: 30px; max-width: 1700px; margin: auto; flex-wrap: wrap;">
+
+      <div style="flex: 1; min-width: 300px;">
+          <h1 style="font-size: 80px; margin:0;">PAWsitive</h1>
+          <p style="font-size: 30px; margin-top:-5px;">
+              Supporting stray animals in our community,<br> ONE PAW AT A TIME!
+          </p>
+          <p style="font-size: 18px; margin-top:15px;">
+              Your Paw-tner in caring for street animals.
+<br><br>
+Welcome to PAWsitive!
+<br><br>
+We are committed to bringing positive, continuous change for stray animals in our community. By merging a hopeful, compassionate approach with coherent action, we lead crucial rescue missions, provide necessary medical care, and assist lasting adoptions.
+From helping injured animals to finding loving homes, we try to make their lives a little better each day. And with people like you by our side, we can keep spreading kindness and hope - one small step, and one happy paw, at a time.
+
+          </p>
+      </div>
+
+      <div style="flex: 0 0 500px; min-width: 500px;">
+          <div class="slider-container" style="height: 700px;">
+              <div class="landscape-slider" style="height: 100%;">
+                  <img src="C:/Users/linds/Downloads/home/1.jpg">
+                  <img src="C:/Users/linds/Downloads/home/2.jpg">
+                  <img src="C:/Users/linds/Downloads/home/3.jpg">
+                  <img src="C:/Users/linds/Downloads/home/4.jpg">
+              </div>
+              <div class="dots-new"></div>
+          </div>
+      </div>
+
+  </div>
+</section>
+
+
+<!-- PAWTNERZ -->
+<section id="pawtner" class="content">
+    <div class="slider-container">
+        <div class="landscape-slider">
+            <img src="C:/Users/linds/Downloads/pawtner/1.jpg">
+            <img src="C:/Users/linds/Downloads/pawtner/2.jpg">
+            <img src="C:/Users/linds/Downloads/pawtner/3.jpg">
+        </div>
+        <div class="dots-container"></div>
+    </div>
+    <p style="font-size: 18px; margin-top: 170px">Helping street animals as a pawtner is more than an act of kindness it is a growing movement that strengthens our sense of community and responsibility. As students, we proudly lead by example, showing that even simple acts of compassion can create meaningful change. We encourage not only our classmates but also families, neighbors, and the wider public to care for the animals in their surroundings. When more people become involved, street animals receive the food, shelter, and medical care they desperately need, reducing suffering and making our neighborhoods safer and more peaceful.
+
+By being part of our community as a <b>Pawsitive Pawtner</b>, you help promote empathy, awareness, and responsible action. You become a role model who shows that every life matters. This mission teaches valuable lessons about leadership, teamwork, and compassion values that go beyond school and into real-life experiences. As more Pawsitive Pawtners join in, we create a powerful chain of kindness that inspires others, leads to more rescues, and provides more animals with the love and protection they deserve.
+
+Together, we build a community where humans and animals can thrive side by side a place where compassion is practiced, shared, and celebrated. Being a Pawsitive Pawtner means choosing to make a difference, one rescued and cared-for animal at a time.
+</p><br>
+    <button style="display: block; margin: 0 auto; padding: 15px 30px" onclick="showContent('main')" class="b4">Back to Main page</button><br>
+</section>
+
+
+
+<!-- OUR SERVICES -->
+<section id="services" class="content services">
+  <div class="gallery" style="border-radius: 20px; width: 100%; max-width: 1500px; height: 550px; overflow: hidden; margin: auto;">
+    <img src="C:/Users/linds/Downloads/services/poster.jpg" style="width: 100%; height: 100%; object-fit: cover; display: block" class="fade-img clickable-img">
+  </div>
+  <div class="gallery" style="width: 100%; max-width: 1700px; display: flex; gap: 25px; justify-content: center; flex-wrap: wrap;">
+    <img src="C:/Users/linds/Downloads/services/1.jpg" style="border-radius: 20px; margin-top: 20px; width: 32%; height: auto; object-fit: cover;" class="fade-img clickable-img">
+    <img src="C:/Users/linds/Downloads/services/2.jpg" style="border-radius: 20px; margin-top: 20px;width: 32%; height: auto; object-fit: cover;" class="fade-img clickable-img">
+    <img src="C:/Users/linds/Downloads/services/3.jpg" style="border-radius: 20px; margin-top: 20px; width: 32%; height: auto; object-fit: cover;" class="fade-img clickable-img">
+  </div>
+
+  <hr style="border-radius: 50px; border: 5px solid #a87a60; width: 100%; margin: 50px auto;">
+  <div class="gallery" style="width: 100%; max-width: 2000px; display: flex; gap: 25px; justify-content: center; flex-wrap: wrap;">
+    <img src="C:/Users/linds/Downloads/services/4.jpg" style="border-radius: 20px; margin-top: 20px; width: 630px; height: auto; object-fit: cover;" class="fade-img clickable-img">
+    <img src="C:/Users/linds/Downloads/services/5.jpg" style="border-radius: 20px; margin-top: 20px; width: 630px; height: auto; object-fit: cover;" class="fade-img clickable-img">
+  </div>
+  <div class="gallery" style="width: 100%; max-width: 2000px; display: flex; gap: 25px; justify-content: center; flex-wrap: wrap;">
+    <img src="C:/Users/linds/Downloads/services/6.jpg" style="border-radius: 20px; margin-top: 30px; width: 630px; height: auto; object-fit: cover;" class="fade-img clickable-img">
+    <img src="C:/Users/linds/Downloads/services/7.jpg" style="border-radius: 20px; margin-top: 30px; width: 630px; height: auto; object-fit: cover;" class="fade-img clickable-img">
+  </div><br> <br> 
+  <button style="display: block; margin: 0 auto; padding: 15px 30px" onclick="showContent('main')" class="b5">Back to Main page</button><br>
+</section>
+
+
+
+
+<!-- ABOUT -->
+<section id="about" class="content">
+  <div style="border-radius: 20px; width: 100%; max-width: 1500px; height: 450px; overflow: hidden; margin: auto;">
+    <img src="C:/Users/linds/Downloads/about/up.jpg" class="fade-img" class="fade-img" style="width: 100%; height: 100%; object-fit: cover; display: block">
+  </div>
+  <p style="font-size: 20px; text-align: center"><b>The name PAWsitive represents our commitment to making a positive, long-term difference in the lives of stray animals in our community by promoting hope, compassion, and practical solutions.</b></p>
+
+<div class="box large">
+  <img src="C:/Users/linds/Downloads/web/logo.png">
+  <div class="text">
+    <h1 style="color: black; font-size: 70px">PAWsitive</h1>
+    <p style="color: black; font-size: 20px">Is a project created by four proud Herons from the University of Makati. We were inspired to start this heartfelt initiative because of how close animals are in our hearts. We often see them on the streets hurt, hungry, and helpless, and instead of just feeling sad, we decided to do something about it, even in the smallest way. Our goal is simple: to help stray dogs and cats ease their starvation, protect them from harm, and find their forever homes.
+</p>
+  </div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 30px; align-items: center;">
+
+    <!-- MISSION ROW -->
+    <div style="display: flex; align-items: flex-start; gap: 25px; width: 80%; justify-content: center;">
+        
+        <!-- MISSION BOX -->
+        <div class="box small click-box" 
+             onclick="toggleText('missionText')" 
+             style="cursor: pointer; width: 280px;">
+            <h1 style="color: black;">MISSION</h1>
+        </div>
+
+        <!-- MISSION TEXT -->
+        <div id="missionText" class="hidden-text" 
+             style="width: 500px; display: none;">
+            <p style="color: black; text-align: left;">
+                To connect compassionate animal lovers with efficient ways to express their support, 
+                ensuring that every donation directly contributes to a better life for a stray.
+            </p>
+        </div>
+    </div>
+
+
+    <!-- VISION ROW -->
+    <div style="display: flex; align-items: flex-start; gap: 25px; width: 80%; justify-content: center;">
+        
+        <!-- VISION BOX -->
+        <div class="box small click-box" 
+             onclick="toggleText('visionText')" 
+             style="cursor: pointer; width: 280px;">
+            <h1 style="text-align: center; color: black;">VISION</h1>
+        </div>
+
+        <!-- VISION TEXT -->
+        <div id="visionText" class="hidden-text" 
+             style="width: 500px; display: none;">
+            <p style="color: black; text-align: left;">
+                To envision a community where each stray animal is safe, healthy, and treated kindly;
+                where the sufferings of stray animals are eliminated by saving, healing, 
+                and giving pets in a responsible way.
+            </p>
+        </div>
+    </div>
+
+</div>
+
+  <div style="border-radius: 20px; width: 100%; max-width: 1500px; height: 450px; overflow: hidden; margin: auto;">
+    <img src="C:/Users/linds/Downloads/web/2.png" class="fade-img" style="margin-top: 40px; width: 100%; height: 100%; object-fit: cover; display: block">
+  </div>
+  <p style="font-size: 20px; text-align: center">Our website serves as a dedicated platform to make the problems of strays known through educational campaigns and by providing information. Partnering with neighbourhoods by showing the progress made, what the local shelters need, and steps to give safe help to a stray, we mobilise our community members to be the change. This is the main idea behind the existence of the website - to educate and inspire people to co-exist with those in need and, in fact, to take action for a less painful future for the homeless ones whose lives are on the streets.
+<br><br>
+<br>
+'Aspin' and 'puspin' are the terms which Filipinos most frequently use when talking about native or mixed-breed dogs and cats, respectively. These two are basically the Filipino equivalents of the words "mixed-breed household pet"; however, the terms have been changed to substitute the old, mostly insulting words "Askal" and "Pusakal" (meaning "street dog" and "street cat" that were used to show less contempt for these animals.
+</b></p>
+
+<div class="gallery" style="width: 100%; max-width: 1700px; display: flex; gap: 25px; justify-content: center; flex-wrap: wrap;">
+    <img src="C:/Users/linds/Downloads/about/1.jpg" style="border-radius: 20px; margin-top: 20px; width: 23%; height: 300px; object-fit: cover;" class="fade-img clickable-img">
+    <img src="C:/Users/linds/Downloads/about/2.jpg" style="border-radius: 20px; margin-top: 20px; width: 23%; height: 300px; object-fit: cover;" class="fade-img clickable-img">
+    <img src="C:/Users/linds/Downloads/about/3.jpg" style="border-radius: 20px; margin-top: 20px; width: 23%; height: 300px; object-fit: cover;" class="fade-img clickable-img">
+    <img src="C:/Users/linds/Downloads/about/4.jpg" style="border-radius: 20px; margin-top: 20px; width: 23%; height: 300px; object-fit: cover;" class="fade-img clickable-img">
+</div>
+
+
+<br>
+  <p style="font-size: 20px; text-align: center">The Aspin (Asong Pinoy) is the native Filipino mixed-breed dog, which can be compared to a "village dog". These dogs are considered great because of their stamina, faithfulness, and cleverness, and they also have the genetic advantage of a hybrid, which makes them generally strong and without diseases. Although their looks can vary greatly, they most of the time have a medium size and a short coat. The word 'Aspin' was brought into common use to give way to the old and less respectful names whose purpose was to bring back the dignity of these loyal and versatile Philippine pets.</p>
+<div style="
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    max-width: 1400px;
+    margin: auto;">
+
+    <div class="gallery" style="display: flex; align-items: center; gap: 25px; max-width: 1000px; margin: auto;">
+
+        <div style="display: flex; flex-direction: column; gap: 10px; width: 40%;">
+            <img src="C:/Users/linds/Downloads/about/down1.jpg"
+                 style="width: 100%; height: 200px; border-radius: 15px; object-fit: cover;" class="fade-img clickable-img">
+            <img src="C:/Users/linds/Downloads/about/down2.jpg"
+                 style="width: 100%; height: 200px; border-radius: 15px; object-fit: cover;" class="fade-img clickable-img">
+        </div>
+
+        <div style="width: 55%;">
+            <p style="font-size: 22px;">
+                The Puspin (Pusang Pinoy) is the Filipino native mixed-breed cat, which is essentially a Domestic Shorthair type. Puspins, being very loving, friendly, and easy to care for, are also tough cats and thus can live comfortably in different surroundings. Their fur can be any colour or pattern, and like the Aspin, they are genetically healthier because they are a hybrid and therefore less likely to inherit particular health problems from purebred cats. They are the most lovable and the best companions everywhere in the Philippines.
+            </p>
+        </div>
+
+    </div>
+
+</div> 
+
+<div class="new box">
+  <div class="text">
+    <p style="text-align: center; color: black; font-size: 20px;">
+The stray crisis in the Philippines is an increasingly alarming issue of animal welfare that has become the major consequence of overpopulation of the country's two most common dog and cat breeds: the Aspins and Puspins. The Philippine Animal Welfare Society (PAWS) has estimated the number of stray dogs and cats to be approximately 12 million based on the data from 2019 to 2022; thus, these animals are in a perpetual fight against starvation, sickness, and maltreatment. The failure to drastically reduce the population of pets through spay/neuter (kapon) procedures is at the core of this crisis, which is additionally, very much, due to the abandonment of animals increasing at such a high rate. As a result, animal rescue groups are always being carried away with their scarce resources, which leads to the often tragic fate of impoundment and euthanasia.
+    </p>
+  </div>
+</div>
+<br> <br>
+   <h3 style="font-size: 23px; text-align: center"><b>Join us in making an impact because together, we can create a safer environment for every stray animal.</b></h3>
+
+</section>
+
+
+
+
+<!-- ADOPT -->
+<section id="adopt" class="content">
+  <div style="display: flex; align-items: center; gap: 20px; margin: auto;">
+    <img src="C:/Users/linds/Downloads/adopt/1.jpg" style="width: 60%; height: auto; border-radius: 10px;" class="fade-img">
+    <div style="text-align:right; margin-top:-70px; margin-right: 20px; line-height:0.8;">
+     <h1 style="font-size:80px; letter-spacing:4px;">ADOPT</h1>
+        <h1 style="font-size:100px; margin-top:-40px; margin-bottom: 30px">SOON. . .</h1>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- DONATIONS -->
+<section id="donations" class="content">
+  <div style="display: flex; gap: 25px; max-width: 1400px; margin: 50px auto; flex-wrap: wrap;">
+
+    <div class="new box" style="flex: 1; min-width: 300px; flex-direction: column; align-items: center; text-align: center;">
+<img src="C:/Users/linds/Downloads/web/logo.png" style="width: 60%; height: auto; margin-top: 15px;">
+      <img src="C:/Users/linds/Downloads/web/qrr.jpg" style="width: 60%; height: auto; border-radius: 15px; margin-bottom: 15px;" class="clickable-img">
+    <div class="text">
+        <p style="color: black; font-size: 18px;">
+          Your help means so much to us and to the animals we care for. There's no such thing as a small donation as every bit helps us buy food, provide treatment and emergency care, and keep stray dogs and cats safe and healthy.<br> <br>
+        </p>
+      </div>
+    </div>
+
+    <div style="text-align: center; flex: 2; min-width: 400px;"><br><br>
+      <p style="font-size:20px"> 
+        <b style="font-size: 30px">Monetary Donations:</b><br>
+        You may donate through the links and QR codes provided below. Every amount goes directly toward the needs of our rescued animals.<br>
+        <br><b style="font-size: 30px">In-kind Donations:</b><br>
+        We also gratefully accept supplies such as pet food, supplements, vitamins, grooming products, cleaning materials, blankets, cages, and other essentials that help us maintain a safe and comfortable environment for the animals.
+        Every contribution you make becomes a lifeline for the animals who need it most. With your help, we are able to:<br><br>
+         </p><p style="margin-left: 40px; text-align: left; font-size: 20px">
+	 • Provide daily meals for rescued dogs and cats.<br>
+         • Cover veterinary checkups, vaccinations, and emergency treatments.<br>
+         • Offer comfort, safety, and rehabilitation to injured, abandoned, or abused animals.<br>
+         • Maintain shelters and temporary spaces.<br>
+         • Give animals a better chance at finding loving, forever homes.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<div id="imgModal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="modalImg">
+    <div id="caption" style="color:white;text-align:center;margin-top:10px;"></div>
+</div>
+
+
+
+
+<!-- CONTACT -->
+<section id="contact" class="content">
+    <p>We’d love to hear from you! Whether you want to volunteer, donate, adopt, or 
+    just learn more about what we do, feel free to reach out.</p>
+
+    <p><b>Email Us 📩:</b> pawww-sitive@email.com <br>
+        <br>
+       <p><b>Location 📍:</b> J.P. Rizal Extension, West Rembo, Taguig City, Metro Manila Philippines <br></p>
+       
+  <div style="border-radius: 20px; width: 100%; max-width: 1500px; height: 300px; overflow: hidden; margin: auto;">
+<a href="https://maps.app.goo.gl/hjr4cH8UzbkGUjrs9" target="_blank">
+<img src="C:/Users/linds/Downloads/web/maps.png" class="hover-img"  style="width: 100%; height: 100%; object-fit: cover; display: block"></a>  
+</div>
+<br> 
+       <b>Working Hours 🕛:</b><br>
+       Our team is available to reply to messages, inquiries, and other concerns during:<br>
+       Monday to Friday: 8:00 AM - 7:00 PM
+    </p>
+    <p>If you prefer to send a message privately, kindly refer to our individual email accounts:</p>
+    <div class="team-section">
+    <div class="member">
+        <a href="https://www.facebook.com/lindsay.balabis" target="_blank">
+        <img src="C:/Users/linds/Downloads/web/say.png" alt="Lindsay Balabis" class="hover-img"></a>
+        <p class="member-name">Lindsay Balabis</p></a>
+	<p class="email-address">lbalabis.9681@umak.edu.ph</p>
+    </div>
+
+    <div class="member">
+        <a href="https://www.facebook.com/alliyah.dumatol.1" target="_blank">
+        <img src="C:/Users/linds/Downloads/web/alli.png" alt="Alliyah Dumat-ol" class="hover-img"></a>
+        <p class="member-name">Alliyah Dumat-ol</p></a>
+        <p>alliyah.dumat-ol@umak.edu.ph</p>
+    </div>
+
+    <div class="member">
+        <a href="https://www.facebook.com/kate.evangelista.232584#" target="_blank">
+        <img src="C:/Users/linds/Downloads/web/kit.png" alt="Kate Evangelista" class="hover-img"></a>
+        <p class="member-name">Kate Evangelista</p></a>
+	<p class="email-address">kate.evangelista@umak.edu.ph</p>
+    </div>
+
+    <div class="member">
+        <a href="https://www.facebook.com/cathrinalumbang#" target="_blank">
+        <img src="C:/Users/linds/Downloads/web/cath.png" alt="Cathrina Lumbang" class="hover-img"></a>
+        <p class="member-name">Cathrina Lumbang</p></a>
+	<p class="email-address">cathrina.lumbang@umak.edu.ph</p>
+    </div>
+</div>
+
+    <p style="font-size: 20px"><b>We always do our best to respond as quickly as possible, especially for urgent animal rescue concerns. Thank you for reaching out and supporting our mission!</b></p>
+
+</section>
+
+<!-- FOOTER -->
+<footer style="color: black; padding:40px 20px; text-align:center; position:relative;">
+  
+  <!-- Send us a message -->
+  <a href="mailto:your@email.com" 
+     style="display:inline-block; margin-bottom:20px; padding:10px 20px; background-color: #472b06; color:white; border-radius:5px; text-decoration:none; font-weight:bold;" class="hover-img">
+    Send us a Message
+  </a>
+
+  <!-- Social Media Icons -->
+  <div style="margin-bottom:0px; display:flex; justify-content:center; gap:10px; font-size:24px;">
+    <a href="https://www.instagram.com" target="_blank" style="color:white;">
+      <img src="C:/Users/linds/Downloads/web/ig2.png" alt="Instagram" style="margin-top: -8px; width:45px; height:45px;">
+    </a>
+    <a href="https://www.facebook.com" target="_blank" style="color:white;">
+      <img src="C:/Users/linds/Downloads/web/fb.png" alt="Facebook" style="width:30px; height:30px;">
+    </a>
+    <a href="https://x.com/" target="_blank" style="color:white;">
+      <img src="C:/Users/linds/Downloads/web/x.png" alt="Facebook" style="width:30px; height:30px;">
+    </a>
+  </div>
+
+  <p style="font-size:14px;">&copy; 2025 PAWsitive | Every Animal Matters 🐾</p>
+</footer>
+
+
+<script>
+// SLIDESHOW
+document.querySelectorAll('.slider-container').forEach(container => {
+    const slider = container.querySelector('.landscape-slider');
+    const images = slider.querySelectorAll('img');
+
+    // Use the correct dots container for this slider
+    const dotsContainer = container.querySelector('.dots-container') || container.querySelector('.dots-new');
+
+    // Clear any existing dots (prevents duplicates)
+    dotsContainer.innerHTML = '';
+
+    // Create dots
+    images.forEach((img, index) => {
+        const dot = document.createElement('span');
+        dot.classList.add('dot');
+        if (index === 0) dot.classList.add('active');
+
+        dot.addEventListener('click', () => {
+            slider.scrollTo({
+                left: img.offsetLeft - (slider.clientWidth - img.clientWidth) / 2,
+                behavior: 'smooth'
+            });
+        });
+
+        dotsContainer.appendChild(dot);
+    });
+
+    // Update active dot on scroll
+    slider.addEventListener('scroll', () => {
+        let sliderCenter = slider.scrollLeft + slider.clientWidth / 2;
+        let activeIndex = 0;
+        images.forEach((img, i) => {
+            let imgCenter = img.offsetLeft + img.clientWidth / 2;
+            if (Math.abs(sliderCenter - imgCenter) < Math.abs(sliderCenter - (images[activeIndex].offsetLeft + images[activeIndex].clientWidth / 2))) {
+                activeIndex = i;
+            }
+        });
+        dotsContainer.querySelectorAll('.dot').forEach(dot => dot.classList.remove('active'));
+        dotsContainer.querySelectorAll('.dot')[activeIndex].classList.add('active');
+    });
+});
+
+// FADE-IN FOR IMAGES
+const fadeImages = document.querySelectorAll('.fade-img');
+
+const observerOptions = { threshold: 0.2 };
+
+const imageObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            imageObserver.unobserve(entry.target);
+        }
+    });
+}, observerOptions);
+
+fadeImages.forEach(img => imageObserver.observe(img));
+
+
+// CONTENT
+function showContent(id) {
+    // Hide all sections
+    document.querySelectorAll('.content').forEach(s => s.classList.remove('active'));
+
+    // Show the target section
+    const section = document.getElementById(id);
+    section.classList.add('active');
+
+    // Reset scroll to top
+    section.scrollTop = 0;              // For scrollable containers
+    window.scrollTo({ top: 0, behavior: 'smooth' }); // For the whole page
+}
+function toggleText(id) {
+    const box = document.getElementById(id);
+    box.style.display = box.style.display === "block" ? "none" : "block";
+}
+const modal = document.getElementById("imgModal");
+const modalImg = document.getElementById("modalImg");
+const caption = document.getElementById("caption");
+const images = document.querySelectorAll(".clickable-img");
+const span = document.getElementsByClassName("close")[0];
+
+images.forEach(img => {
+    img.onclick = function(){
+        modal.style.display = "block";
+        modalImg.src = this.src;
+        caption.innerHTML = this.alt;
+    }
+});
+
+span.onclick = function() { 
+    modal.style.display = "none";
+}
+
+modal.onclick = function(e){
+    if(e.target === modal){
+        modal.style.display = "none";
+    }
+}
+function toggleSidebar() {
+    const sidebar = document.getElementById("sidebar");
+
+    if (sidebar.style.width === "250px") {
+        sidebar.style.width = "0";
+    } else {
+        sidebar.style.width = "250px";
+    }
+}
+
+
+// Close sidebar when clicking outside it
+document.addEventListener("click", function(event) {
+    const sidebar = document.getElementById("sidebar");
+    const hamburger = document.querySelector(".hamburger");
+
+    // If sidebar is open AND click is not on sidebar or hamburger button
+    if (sidebar.style.width === "250px" && 
+        !sidebar.contains(event.target) &&
+        event.target !== hamburger) 
+    {
+        sidebar.style.width = "0";
+    }
+});
+
+
+</script>
+
+</body>
+</html>
